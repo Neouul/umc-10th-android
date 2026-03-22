@@ -1,11 +1,10 @@
 package com.neouul.umc10android.week01
 
-import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.graphics.toColorInt
 import com.neouul.umc10android.week01.databinding.ActivityMainBinding
+import com.neouul.umc10android.week01.ui.AppColors
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,35 +18,35 @@ class MainActivity : AppCompatActivity() {
 
         binding.ivHappy.setOnClickListener {
             resetColor()
-            binding.tvHappy.setTextColor("#FFEFB6".toColorInt())
+            binding.tvHappy.setTextColor(AppColors.happyText)
         }
 
         binding.ivExciting.setOnClickListener {
             resetColor()
-            binding.tvExciting.setTextColor("#CEE7F5".toColorInt())
-        }
+            binding.tvExciting.setTextColor(AppColors.excitingText)
 
-        binding.ivSoso.setOnClickListener {
-            resetColor()
-            binding.tvSoso.setTextColor("#BEC3ED".toColorInt())
-        }
+            binding.ivSoso.setOnClickListener {
+                resetColor()
+                binding.tvSoso.setTextColor(AppColors.sosoText)
+            }
 
-        binding.ivUnrest.setOnClickListener {
-            resetColor()
-            binding.tvUnrest.setTextColor("#B1D3B9".toColorInt())
-        }
+            binding.ivUnrest.setOnClickListener {
+                resetColor()
+                binding.tvUnrest.setTextColor(AppColors.unrestText)
+            }
 
-        binding.ivAngry.setOnClickListener {
-            resetColor()
-            binding.tvAngry.setTextColor("#EB8B8B".toColorInt())
+            binding.ivAngry.setOnClickListener {
+                resetColor()
+                binding.tvAngry.setTextColor(AppColors.angryText)
+            }
         }
     }
 
     private fun resetColor() {
-        binding.tvHappy.setTextColor(Color.BLACK)
-        binding.tvExciting.setTextColor(Color.BLACK)
-        binding.tvSoso.setTextColor(Color.BLACK)
-        binding.tvUnrest.setTextColor(Color.BLACK)
-        binding.tvAngry.setTextColor(Color.BLACK)
+        binding.tvHappy.setTextColor(AppColors.black)
+        binding.tvExciting.setTextColor(AppColors.black)
+        binding.tvSoso.setTextColor(AppColors.black)
+        binding.tvUnrest.setTextColor(AppColors.black)
+        binding.tvAngry.setTextColor(AppColors.black)
     }
 }
