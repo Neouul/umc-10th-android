@@ -38,4 +38,22 @@ onRestart
 onResume
 ```
 
+#### 미션1 실행 후 정답 확인
+
+1-1. 
+
+
+1-2.
+
+
+1-3.
+
+```
+onPause
+onStop
+onRestart
+onStart  <-- 빠뜨림
+onResume
+```
+
 2. 
