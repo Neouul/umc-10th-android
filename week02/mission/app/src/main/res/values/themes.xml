@@ -6,4 +6,21 @@
     </style>
 
     <style name="Theme.Week02" parent="Base.Theme.Week02" />
+
+    <!--  Bottom Navigation  -->
+    <style name="BottomNav_NoIndicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">@android:color/transparent</item>
+        <item name="android:width">0dp</item>
+    </style>
+
+    <style name="BottomNav_Label_Inactive" parent="TextAppearance.Material3.LabelSmall">
+        <item name="android:textSize">10sp</item>
+
+        <item name="android:fontFamily">@font/noto_sans_regular</item> </style>
+
+    <style name="BottomNav_Label_Active" parent="TextAppearance.Material3.LabelSmall">
+        <item name="android:textSize">10sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/noto_sans_bold</item>
+    </style>
 </resources>
