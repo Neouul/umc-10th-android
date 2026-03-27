@@ -1,48 +1,74 @@
 package com.neouul.umc10android.week02
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import com.neouul.umc10android.week02.databinding.ActivityMainBinding
+import com.neouul.umc10android.week02.presentation.fragment.CartFragment
+import com.neouul.umc10android.week02.presentation.fragment.HomeFragment
+import com.neouul.umc10android.week02.presentation.fragment.ProfileFragment
+import com.neouul.umc10android.week02.presentation.fragment.ShopFragment
+import com.neouul.umc10android.week02.presentation.fragment.WishFragment
 
 class MainActivity : AppCompatActivity() {
-    private val TAG = "LIFE_QUIZ"
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        Log.d(TAG, "onCreate")
-    }
+        enableEdgeToEdge()
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-    override fun onStart() {
-        super.onStart()
-        Log.d(TAG, "onStart")
-    }
+        // 홈 화면에서 시작
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.main_fragmentContainer, HomeFragment())
+            .commit()
 
-    override fun onResume() {
-        super.onResume()
-        Log.d(TAG, "onResume")
-    }
+        // BottomNavigationView를 눌렀을 때 Fragment 변경하기
+        binding.mainBnv.setOnItemSelectedListener { item ->
+            when (item.itemId){
 
-    override fun onPause() {
-        super.onPause()
-        Log.d(TAG, "onPause")
-    }
+                // 홈 화면
+                R.id.home_fragment -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.main_fragmentContainer, HomeFragment())
+                        .commit()
+                    true
+                }
 
-    override fun onStop() {
-        super.onStop()
-        Log.d(TAG, "onStop")
-    }
+                // 구매하기 화면
+                R.id.shop_fragment -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.main_fragmentContainer, ShopFragment())
+                        .commit()
+                    true
+                }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.d(TAG, "onDestroy")
-    }
+                // 위시리스트 화면
+                R.id.wish_fragment -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.main_fragmentContainer, WishFragment())
+                        .commit()
+                    true
+                }
 
-    override fun onRestart() {
-        super.onRestart()
-        Log.d(TAG, "onRestart")
+                // 장바구니 화면
+                R.id.cart_fragment -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.main_fragmentContainer, CartFragment())
+                        .commit()
+                    true
+                }
+
+                // 마이페이지 화면
+                R.id.profile_fragment -> {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.main_fragmentContainer, ProfileFragment())
+                        .commit()
+                    true
+                }
+                else -> false
+            }
+        }
     }
 }
