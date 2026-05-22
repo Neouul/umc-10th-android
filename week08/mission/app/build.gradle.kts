@@ -5,18 +5,20 @@ plugins {
 
     // Optional, provides the @Serialize annotation for autogeneration of Serializers.
     alias(libs.plugins.kotlin.serialization)
+
+    // Hilt
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.hilt)
 }
 
 android {
     namespace = "com.neouul.umc10android.week08"
-    compileSdk {
-        version = release(36)
-    }
+    compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
         applicationId = "com.neouul.umc10android.week08"
-        minSdk = 24
-        targetSdk = 36
+        minSdk = libs.versions.minSdk.get().toInt()
+        targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = 1
         versionName = "1.0"
 
@@ -71,6 +73,18 @@ dependencies {
     implementation(libs.coil.network.okhttp)
 
     // 컴포즈 전용 ViewModel
-//    implementation("androidx.lifecycle:lifecycle-viewmodel-compose-android:2.10.0")
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
 
+    // Hilt : Dagger 상위호환 의존성 주입 라이브러리
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.android.compiler)
+    implementation(libs.androidx.hilt.navigation.compose)
+
+    // Retrofit2 라이브러리
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.converter.gson)
+
+    implementation(libs.okhttp.logging.interceptor)
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.coroutines.android)
 }
