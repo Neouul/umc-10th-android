@@ -80,6 +80,11 @@ dependencies {
     ksp(libs.hilt.android.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
 
+    // Room
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
+
     // Retrofit2 라이브러리
     implementation(libs.retrofit)
     implementation(libs.retrofit.converter.gson)

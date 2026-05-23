@@ -3,6 +3,8 @@ package com.neouul.umc10android.week08.core.di
 import com.neouul.umc10android.week08.data.data_source.ProductDataSource
 import com.neouul.umc10android.week08.data.data_source.ProductDataSourceImpl
 import com.neouul.umc10android.week08.data.data_source.UserDataSource
+import com.neouul.umc10android.week08.data.data_source.remote.RemoteProductDataSource
+import com.neouul.umc10android.week08.data.data_source.remote.RemoteProductDataSourceImpl
 import com.neouul.umc10android.week08.data.data_source.remote.RemoteUserDataSourceImpl
 import dagger.Binds
 import dagger.Module
@@ -25,4 +27,10 @@ abstract class DataSourceModule {
     abstract fun bindUserDataSource(
         remoteUserDataSourceImpl: RemoteUserDataSourceImpl
     ): UserDataSource
+
+    @Binds
+    @Singleton
+    abstract fun bindRemoteProductDataSource(
+        remoteProductDataSourceImpl: RemoteProductDataSourceImpl
+    ): RemoteProductDataSource
 }

@@ -1,6 +1,7 @@
 package com.neouul.umc10android.week08.core.di
 
 import com.google.gson.Gson
+import com.neouul.umc10android.week08.data.data_source.remote.api.ProductService
 import com.neouul.umc10android.week08.data.data_source.remote.api.ReqResService
 import dagger.Module
 import dagger.Provides
@@ -17,7 +18,8 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
-    private const val BASE_URL = "https://reqres.in/"
+    private const val REQRES_BASE_URL = "https://reqres.in/"
+    private const val PRODUCT_BASE_URL = "https://raw.githubusercontent.com/Neouul/umc-mock-data/main/"
 
     @Provides
     @Singleton
@@ -48,20 +50,29 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideRetrofit(
+    fun provideReqResService(
         okHttpClient: OkHttpClient,
         gson: Gson
-    ): Retrofit {
+    ): ReqResService {
         return Retrofit.Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl(REQRES_BASE_URL)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
+            .create(ReqResService::class.java)
     }
 
     @Provides
     @Singleton
-    fun provideReqResService(retrofit: Retrofit): ReqResService {
-        return retrofit.create(ReqResService::class.java)
+    fun provideProductService(
+        okHttpClient: OkHttpClient,
+        gson: Gson
+    ): ProductService {
+        return Retrofit.Builder()
+            .baseUrl(PRODUCT_BASE_URL)
+            .client(okHttpClient)
+            .addConverterFactory(GsonConverterFactory.create(gson))
+            .build()
+            .create(ProductService::class.java)
     }
 }

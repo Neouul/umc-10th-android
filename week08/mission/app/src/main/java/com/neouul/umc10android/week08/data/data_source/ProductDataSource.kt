@@ -1,13 +1,16 @@
 package com.neouul.umc10android.week08.data.data_source
 
+import com.neouul.umc10android.week08.data.data_source.local.entity.ProductWithWish
+import com.neouul.umc10android.week08.data.data_source.local.entity.ProductEntity
+import com.neouul.umc10android.week08.data.data_source.local.entity.WishEntity
 import kotlinx.coroutines.flow.Flow
 
 interface ProductDataSource {
-    fun getTotalProducts(): Flow<String>
-    fun getHomeProducts(): Flow<String>
-    fun getWishProducts(): Flow<String>
+    fun getAllProducts(): Flow<List<ProductWithWish>>
+    fun getProductsByIds(ids: List<Long>): Flow<List<ProductWithWish>>
+    fun getWishedProducts(): Flow<List<ProductWithWish>>
 
-    suspend fun updateTotalProduct(products: String)
-    suspend fun updateHomeProduct(products: String)
-    suspend fun updateWishProduct(products: String)
+    suspend fun insertProducts(products: List<ProductEntity>)
+    suspend fun updateWishStatus(productId: Long, isWished: Boolean)
+    suspend fun getProductCount(): Int
 }
