@@ -19,7 +19,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.neouul.umc10android.week08.data.data_source.local.DummyDataSource
 import com.neouul.umc10android.week08.domain.model.Product
 import com.neouul.umc10android.week08.presentation.component.ProductItem
 import com.neouul.umc10android.week08.ui.AppColors
@@ -27,7 +26,7 @@ import com.neouul.umc10android.week08.ui.AppTextStyles
 
 @Composable
 fun WishScreen(
-    products: List<Product> = emptyList(), // 데이터 리스트 전달받음
+    uiState: WishState,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -59,7 +58,10 @@ fun WishScreen(
             verticalArrangement = Arrangement.spacedBy(8.dp),
             modifier = Modifier.fillMaxSize()
         ) {
-            items(products) { product ->
+            items(
+                items = uiState.products,
+                key = { it.id }
+            ) { product ->
                 ProductItem(
                     product = product,
                     isWishItem = true,
@@ -69,8 +71,10 @@ fun WishScreen(
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 private fun WishScreenPreview() {
-    WishScreen(products = DummyDataSource.dummyWishProducts)
+    WishScreen(
+        uiState = WishState(),
+    )
 }

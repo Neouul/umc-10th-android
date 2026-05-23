@@ -10,14 +10,18 @@ import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 @Composable
 fun HomeRoot(
-    title: String
+    title: String,
+    viewModel: HomeViewModel = hiltViewModel()
 ) {
     val scrollState = rememberScrollState()
     val context = LocalContext.current
     var backPressedTime by remember { mutableLongStateOf(0L) }
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     BackHandler {
         if (System.currentTimeMillis() - backPressedTime < 2000) {
@@ -30,6 +34,7 @@ fun HomeRoot(
 
     HomeScreen(
         title = title,
+        uiState = uiState,
         scrollState = scrollState
     )
 }

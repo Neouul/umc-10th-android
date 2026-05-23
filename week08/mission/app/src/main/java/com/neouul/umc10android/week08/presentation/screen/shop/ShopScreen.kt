@@ -17,43 +17,21 @@ import androidx.compose.material3.TabRowDefaults.SecondaryIndicator
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.neouul.umc10android.week08.data.data_source.local.DummyDataSource
+import com.neouul.umc10android.week08.domain.model.Product
 import com.neouul.umc10android.week08.presentation.component.ProductItem
 import com.neouul.umc10android.week08.ui.AppColors
 import com.neouul.umc10android.week08.ui.AppTextStyles
 
 @Composable
 fun ShopScreen(
-
+    uiState: ShopState,
+    onTabSelected: (Int) -> Unit,
+    onWishClick: (Product) -> Unit
 ) {
-    var selectedTabIndex by remember { mutableIntStateOf(0) }
-    val tabs = listOf("전체", "Tops & T-Shirts", "sale")
-
-    // 가상의 카테고리 할당 데이터
-    val products = remember {
-        DummyDataSource.dummyWishProducts.mapIndexed { index, product ->
-            when (index) {
-                1, 4 -> product.copy(category = "sale", isBestSeller = index == 1)
-                0, 2, 3, 5 -> product.copy(category = "Tops", isBestSeller = index == 0)
-                else -> product
-            }
-        }
-    }
-
-    val filteredProducts = when (selectedTabIndex) {
-        1 -> products.filter { it.category == "Tops" }
-        2 -> products.filter { it.category == "sale" }
-        else -> products
-    }
-
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -63,16 +41,16 @@ fun ShopScreen(
         Spacer(modifier = Modifier.height(15.dp))
 
         ScrollableTabRow(
-            selectedTabIndex = selectedTabIndex,
+            selectedTabIndex = uiState.selectedTabIndex,
             modifier = Modifier
                 .padding(start = 9.dp),
             containerColor = Color.Transparent,
             contentColor = AppColors.black,
             edgePadding = 0.dp,
             indicator = { tabPositions ->
-                if (selectedTabIndex < tabPositions.size) {
+                if (uiState.selectedTabIndex < tabPositions.size) {
                     SecondaryIndicator(
-                        modifier = Modifier.tabIndicatorOffset(tabPositions[selectedTabIndex]),
+                        modifier = Modifier.tabIndicatorOffset(tabPositions[uiState.selectedTabIndex]),
                         height = 2.dp,
                         color = AppColors.black
                     )
@@ -80,17 +58,17 @@ fun ShopScreen(
             },
             divider = {}, // 구분선 제거
         ) {
-            tabs.forEachIndexed { index, title ->
+            uiState.tabs.forEachIndexed { index, title ->
                 Tab(
-                    selected = selectedTabIndex == index,
-                    onClick = { selectedTabIndex = index },
+                    selected = uiState.selectedTabIndex == index,
+                    onClick = { onTabSelected(index) },
                     modifier = Modifier.height(56.dp),
                 ) {
                     Text(
                         text = title,
                         style = AppTextStyles.headerTextRegular,
                         modifier = Modifier.padding(horizontal = 24.dp),
-                        color = if (selectedTabIndex == index) AppColors.black else AppColors.gray1
+                        color = if (uiState.selectedTabIndex == index) AppColors.black else AppColors.gray1
                     )
                 }
             }
@@ -105,9 +83,13 @@ fun ShopScreen(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            items(filteredProducts) { product ->
+            items(
+                items = uiState.products,
+                key = { it.id }
+            ) { product ->
                 ProductItem(
                     product = product,
+                    onWishClick = { onWishClick(product) }
                 )
             }
         }
@@ -117,5 +99,9 @@ fun ShopScreen(
 @Preview(showBackground = true)
 @Composable
 private fun ShopScreenPreview() {
-    ShopScreen()
+    ShopScreen(
+        uiState = ShopState(),
+        onTabSelected = {},
+        onWishClick = {}
+    )
 }

@@ -9,13 +9,12 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
-import com.neouul.umc10android.week08.data.data_source.local.DummyDataSource
 import com.neouul.umc10android.week08.presentation.screen.cart.CartScreen
 import com.neouul.umc10android.week08.presentation.screen.home.HomeRoot
 import com.neouul.umc10android.week08.presentation.screen.main.MainScreen
 import com.neouul.umc10android.week08.presentation.screen.profiie.ProfileScreen
-import com.neouul.umc10android.week08.presentation.screen.shop.ShopScreen
-import com.neouul.umc10android.week08.presentation.screen.wish.WishScreen
+import com.neouul.umc10android.week08.presentation.screen.shop.ShopRoot
+import com.neouul.umc10android.week08.presentation.screen.wish.WishRoot
 import androidx.navigation.toRoute
 
 import com.neouul.umc10android.week08.presentation.screen.splash.SplashRoot
@@ -81,10 +80,10 @@ fun NavigationRoot(
                                 HomeRoot(title = homeRoute.title)
                             }
                             composable<Route.Shop> {
-                                ShopScreen()
+                                ShopRoot()
                             }
                             composable<Route.Wish> {
-                                WishScreen(products = DummyDataSource.dummyWishProducts)
+                                WishRoot()
                             }
                             composable<Route.Cart> {
                                 CartScreen(

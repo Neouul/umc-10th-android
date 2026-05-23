@@ -26,10 +26,12 @@ import com.neouul.umc10android.week08.presentation.component.NewProductItem
 import com.neouul.umc10android.week08.ui.AppColors
 import com.neouul.umc10android.week08.ui.AppTextStyles
 import androidx.compose.foundation.ScrollState
+import androidx.compose.foundation.lazy.items
 
 @Composable
 fun HomeScreen(
     title: String,
+    uiState: HomeState = HomeState(),
     scrollState: ScrollState = rememberScrollState()
 ) {
 
@@ -102,14 +104,12 @@ fun HomeScreen(
                 Spacer(Modifier.width(35.dp))
             }
 
-            items(5) { index ->
+            items(
+                items = uiState.products,
+                key = { it.id }
+            ) { product ->
                 NewProductItem(
-                    product = Product(
-                        id = 1,
-                        name = "Air Jordan XXXVI",
-                        price = "US\$185",
-                        img = "https://static.nike.com/a/images/t_web_pw_592_v2/f_auto/u_126ab356-44d8-4a06-89b4-fcdcc8df0245,c_scale,fl_relative,w_1.0,h_1.0,fl_layer_apply/064afac6-d5c0-4be2-aa48-1ecebae0cf7d/AIR+JORDAN+1+LOW.png",
-                    )
+                    product = product
                 )
             }
 

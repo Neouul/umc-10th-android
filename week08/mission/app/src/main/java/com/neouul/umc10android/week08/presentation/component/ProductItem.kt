@@ -2,6 +2,7 @@ package com.neouul.umc10android.week08.presentation.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -32,11 +33,14 @@ fun ProductItem(
     product: Product,
     modifier: Modifier = Modifier,
     isWishItem: Boolean = false,
+    onWishClick: (Product) -> Unit = {},
+    onItemClick: (Product) -> Unit = {},
 ) {
     Column(
         modifier = modifier
             .fillMaxWidth()
             .padding(bottom = 16.dp)
+            .clickable { onItemClick(product) }
     ) {
         // 상품 이미지
         Box(
@@ -60,6 +64,7 @@ fun ProductItem(
                         .clip(CircleShape)
                         .background(AppColors.white)
                         .align(Alignment.TopEnd)
+                        .clickable { onWishClick(product) }
                 ) {
                     Image(
                         painter = if (product.isWished) painterResource(id = R.drawable.ic_heart_full)
