@@ -30,7 +30,8 @@ import com.neouul.umc10android.week08.ui.AppTextStyles
 fun ShopScreen(
     uiState: ShopState,
     onTabSelected: (Int) -> Unit,
-    onWishClick: (Product) -> Unit
+    onWishClick: (Product) -> Unit,
+    onProductClick: (Product) -> Unit = {}
 ) {
     Column(
         modifier = Modifier
@@ -89,7 +90,8 @@ fun ShopScreen(
             ) { product ->
                 ProductItem(
                     product = product,
-                    onWishClick = { onWishClick(product) }
+                    onWishClick = { onWishClick(product) },
+                    onItemClick = onProductClick
                 )
             }
         }

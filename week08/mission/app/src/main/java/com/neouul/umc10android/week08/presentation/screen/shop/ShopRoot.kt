@@ -4,9 +4,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.neouul.umc10android.week08.domain.model.Product
 
 @Composable
 fun ShopRoot(
+    onNavigateToDetail: (Product) -> Unit = {},
     viewModel: ShopViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -14,6 +16,7 @@ fun ShopRoot(
     ShopScreen(
         uiState = uiState,
         onTabSelected = viewModel::onTabSelected,
-        onWishClick = viewModel::toggleWish
+        onWishClick = viewModel::toggleWish,
+        onProductClick = onNavigateToDetail
     )
 }

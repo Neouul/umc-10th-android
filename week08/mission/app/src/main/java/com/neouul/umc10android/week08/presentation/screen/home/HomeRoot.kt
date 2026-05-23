@@ -12,10 +12,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.neouul.umc10android.week08.domain.model.Product
 
 @Composable
 fun HomeRoot(
     title: String,
+    onNavigateToDetail: (Product) -> Unit = {},
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val scrollState = rememberScrollState()
@@ -35,6 +37,7 @@ fun HomeRoot(
     HomeScreen(
         title = title,
         uiState = uiState,
+        onProductClick = onNavigateToDetail,
         scrollState = scrollState
     )
 }

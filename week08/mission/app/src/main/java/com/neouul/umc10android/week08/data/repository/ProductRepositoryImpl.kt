@@ -28,6 +28,12 @@ class ProductRepositoryImpl @Inject constructor(
         }
     }
 
+    override fun getProduct(productId: Long): Flow<Product?> {
+        return localDataSource.getProductsByIds(listOf(productId)).map { list ->
+            list.firstOrNull()?.toDomain()
+        }
+    }
+
     override suspend fun syncProducts() {
         try {
             // 로컬에 데이터가 없을 때만 서버와 동기화 (필요에 따라 정책 변경 가능)

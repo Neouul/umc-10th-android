@@ -16,8 +16,8 @@ import com.neouul.umc10android.week08.presentation.screen.profiie.ProfileScreen
 import com.neouul.umc10android.week08.presentation.screen.shop.ShopRoot
 import com.neouul.umc10android.week08.presentation.screen.wish.WishRoot
 import androidx.navigation.toRoute
-
 import com.neouul.umc10android.week08.presentation.screen.splash.SplashRoot
+import com.neouul.umc10android.week08.presentation.screen.detail.DetailRoot
 
 @Composable
 fun NavigationRoot(
@@ -77,13 +77,26 @@ fun NavigationRoot(
                         ) {
                             composable<Route.Home> { backStackEntry ->
                                 val homeRoute: Route.Home = backStackEntry.toRoute()
-                                HomeRoot(title = homeRoute.title)
+                                HomeRoot(
+                                    title = homeRoute.title,
+                                    onNavigateToDetail = { product ->
+                                        mainNavController.navigate(Route.ProductDetail(productId = product.id))
+                                    }
+                                )
                             }
                             composable<Route.Shop> {
-                                ShopRoot()
+                                ShopRoot(
+                                    onNavigateToDetail = { product ->
+                                        mainNavController.navigate(Route.ProductDetail(productId = product.id))
+                                    }
+                                )
                             }
                             composable<Route.Wish> {
-                                WishRoot()
+                                WishRoot(
+                                    onNavigateToDetail = { product ->
+                                        mainNavController.navigate(Route.ProductDetail(productId = product.id))
+                                    }
+                                )
                             }
                             composable<Route.Cart> {
                                 CartScreen(
@@ -95,15 +108,17 @@ fun NavigationRoot(
                             composable<Route.Profile> {
                                 ProfileScreen()
                             }
+                            composable<Route.ProductDetail> {
+                                DetailRoot(
+                                    onBackClick = {
+                                        mainNavController.popBackStack()
+                                    }
+                                )
+                            }
                         }
                     }
                 }
             )
-        }
-
-        composable<Route.ProductDetail> { backStackEntry ->
-            // val productDetail: Route.ProductDetail = backStackEntry.toRoute()
-            // ProductDetailScreen(productId = productDetail.productId)
         }
     }
 }

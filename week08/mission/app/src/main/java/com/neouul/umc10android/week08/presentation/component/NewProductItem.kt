@@ -17,17 +17,20 @@ import coil3.compose.AsyncImage
 import com.neouul.umc10android.week08.domain.model.Product
 import com.neouul.umc10android.week08.ui.AppColors
 import com.neouul.umc10android.week08.ui.AppTextStyles
+import androidx.compose.foundation.clickable
 
 @Composable
 fun NewProductItem(
     product: Product,
     modifier: Modifier = Modifier,
+    onItemClick: (Product) -> Unit = {},
 ) {
     Column(
         modifier = modifier
             .width(314.dp)
             .height(718.dp)
             .background(AppColors.gray5)
+            .clickable { onItemClick(product) }
     ) {
         AsyncImage(
             modifier = Modifier
