@@ -32,6 +32,7 @@ import androidx.compose.foundation.lazy.items
 fun HomeScreen(
     title: String,
     uiState: HomeState = HomeState(),
+    onProductClick: (Product) -> Unit = {},
     scrollState: ScrollState = rememberScrollState()
 ) {
 
@@ -109,7 +110,8 @@ fun HomeScreen(
                 key = { it.id }
             ) { product ->
                 NewProductItem(
-                    product = product
+                    product = product,
+                    onItemClick = onProductClick
                 )
             }
 

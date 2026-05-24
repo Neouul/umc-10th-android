@@ -23,10 +23,11 @@ import com.neouul.umc10android.week08.domain.model.Product
 import com.neouul.umc10android.week08.presentation.component.ProductItem
 import com.neouul.umc10android.week08.ui.AppColors
 import com.neouul.umc10android.week08.ui.AppTextStyles
-
 @Composable
 fun WishScreen(
     uiState: WishState,
+    onWishClick: (Product) -> Unit = {},
+    onProductClick: (Product) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -65,12 +66,13 @@ fun WishScreen(
                 ProductItem(
                     product = product,
                     isWishItem = true,
+                    onWishClick = { onWishClick(product) },
+                    onItemClick = onProductClick
                 )
             }
         }
     }
 }
-
 @Preview(showBackground = true)
 @Composable
 private fun WishScreenPreview() {

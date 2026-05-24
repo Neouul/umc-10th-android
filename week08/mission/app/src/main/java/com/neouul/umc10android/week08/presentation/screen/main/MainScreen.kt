@@ -26,7 +26,7 @@ fun MainScreen(
     // 현재 탭 경로 확인 (하단바 선택 상태 표시용)
     val currentTab = when {
         currentDestination?.hasRoute<Route.Home>() == true -> Route.Home("")
-        currentDestination?.hasRoute<Route.Shop>() == true -> Route.Shop
+        currentDestination?.hasRoute<Route.Shop>() == true || currentDestination?.hasRoute<Route.ProductDetail>() == true -> Route.Shop
         currentDestination?.hasRoute<Route.Wish>() == true -> Route.Wish
         currentDestination?.hasRoute<Route.Cart>() == true -> Route.Cart
         currentDestination?.hasRoute<Route.Profile>() == true -> Route.Profile
