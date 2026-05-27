@@ -4,16 +4,16 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.neouul.umc10android.example.component.pager.ImageGallery
 import com.neouul.umc10android.example.component.pager.PagerDotIndicator
+import kotlinx.coroutines.launch
 
 @Composable
 fun MainScreen() {
@@ -26,6 +26,7 @@ fun MainScreen() {
         "https://cdn.pixabay.com/photo/2019/05/08/21/21/cat-4189697_1280.jpg",
     )
     val pagerState = rememberPagerState(pageCount = { images.size })
+    val scope = rememberCoroutineScope()
 
     Column(
         modifier = Modifier.fillMaxSize()
@@ -36,11 +37,38 @@ fun MainScreen() {
             images = images,
         )
 
-        PagerDotIndicator(
-            pagerState = pagerState,
-            pageCount = images.size,
-            modifier = Modifier.align(Alignment.CenterHorizontally)
-        )
+        Row {
+            Button(
+                onClick = {
+                    scope.launch {
+                        pagerState.animateScrollToPage(pagerState.currentPage - 1)
+                    }
+                }
+            ) {
+                Text(
+                    text = "<<"
+                )
+            }
+
+            Spacer(Modifier.weight(1f))
+            PagerDotIndicator(
+                pagerState = pagerState,
+                pageCount = images.size,
+            )
+            Spacer(Modifier.weight(1f))
+
+            Button(
+                onClick = {
+                    scope.launch {
+                        pagerState.animateScrollToPage(pagerState.currentPage + 1)
+                    }
+                }
+            ) {
+                Text(
+                    text = ">>"
+                )
+            }
+        }
     }
 }
 
