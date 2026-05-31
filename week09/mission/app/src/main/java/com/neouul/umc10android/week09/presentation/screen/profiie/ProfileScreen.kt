@@ -2,7 +2,9 @@ package com.neouul.umc10android.week09.presentation.screen.profiie
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.PageSize
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
@@ -31,6 +33,7 @@ fun ProfileScreen(
     uiState: ProfileState = ProfileState(),
 ) {
     val scrollState = rememberScrollState()
+    val pagerState = rememberPagerState(pageCount = { 5 })
 
     if (uiState.isLoading) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
@@ -48,6 +51,7 @@ fun ProfileScreen(
                 .verticalScroll(scrollState)
         ) {
             // 프로필 헤더
+            // ... (생략된 헤더 부분)
             Spacer(modifier = Modifier.height(21.dp))
             Box(
                 modifier = Modifier
@@ -142,7 +146,7 @@ fun ProfileScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "팔로잉 (n)",
+                    text = "팔로잉 (${uiState.followingList.size})",
                     style = AppTextStyles.mediumTextMedium,
                     color = AppColors.black
                 )
@@ -153,24 +157,37 @@ fun ProfileScreen(
                 )
             }
 
-            LazyRow(
+            val pagerState = rememberPagerState(pageCount = { uiState.followingList.size })
+
+            HorizontalPager(
+                state = pagerState,
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(6.dp)
-            ) {
-                item {
-                    Spacer(modifier = Modifier.width(18.dp))
-                }
-                items(5) {
-                    Box(
-                        modifier = Modifier
-                            .size(106.dp)
-                            .background(AppColors.gray3),
-                    ) {
-                        // 프로필 이미지
+                contentPadding = PaddingValues(horizontal = 18.dp),
+                pageSpacing = 6.dp,
+                pageSize = PageSize.Fixed(106.dp)
+            ) { page ->
+                val user = uiState.followingList.getOrNull(page)
+                Box(
+                    modifier = Modifier
+                        .size(106.dp)
+                        .background(AppColors.gray3),
+                    contentAlignment = Alignment.Center
+                ) {
+                    if (user?.avatarUrl != null) {
+                        AsyncImage(
+                            model = user.avatarUrl,
+                            contentDescription = "Following User Avatar",
+                            modifier = Modifier.fillMaxSize(),
+                            contentScale = ContentScale.Crop
+                        )
+                    } else {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_user),
+                            contentDescription = null,
+                            modifier = Modifier.size(48.dp),
+                            tint = AppColors.gray1
+                        )
                     }
-                }
-                item {
-                    Spacer(modifier = Modifier.width(18.dp))
                 }
             }
 

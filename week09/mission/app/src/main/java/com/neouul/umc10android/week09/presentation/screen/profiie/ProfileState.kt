@@ -5,6 +5,7 @@ import com.neouul.umc10android.week09.domain.model.User
 
 data class ProfileState(
     val user: User? = null,
+    val followingList: List<User> = emptyList(),
     val isLoading: Boolean = false,
     val error: String? = null
 ) : UiState
