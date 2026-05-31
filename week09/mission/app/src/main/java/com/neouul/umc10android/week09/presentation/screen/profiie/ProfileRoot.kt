@@ -13,5 +13,7 @@ fun ProfileRoot(
 
     ProfileScreen(
         uiState = uiState,
+        onUserClick = viewModel::onUserClicked,
+        onDismissDialog = viewModel::onDismissDialog
     )
 }

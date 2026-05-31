@@ -1,12 +1,14 @@
 package com.neouul.umc10android.week09.presentation.screen.profiie
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PageSize
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -19,6 +21,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
 import coil3.compose.AsyncImage
 import com.neouul.umc10android.week09.presentation.component.CommonButton
 import com.neouul.umc10android.week09.presentation.component.ProfileTabItem
@@ -27,13 +30,15 @@ import com.neouul.umc10android.week09.presentation.component.VerticalDivider
 import com.neouul.umc10android.week09.ui.AppColors
 import com.neouul.umc10android.week09.ui.AppTextStyles
 import com.neouul.umc10android.week09.R
+import com.neouul.umc10android.week09.domain.model.User
 
 @Composable
 fun ProfileScreen(
     uiState: ProfileState = ProfileState(),
+    onUserClick: (User) -> Unit = {},
+    onDismissDialog: () -> Unit = {}
 ) {
     val scrollState = rememberScrollState()
-    val pagerState = rememberPagerState(pageCount = { 5 })
 
     if (uiState.isLoading) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
@@ -170,7 +175,8 @@ fun ProfileScreen(
                 Box(
                     modifier = Modifier
                         .size(106.dp)
-                        .background(AppColors.gray3),
+                        .background(AppColors.gray3)
+                        .clickable { user?.let { onUserClick(it) } },
                     contentAlignment = Alignment.Center
                 ) {
                     if (user?.avatarUrl != null) {
@@ -208,6 +214,34 @@ fun ProfileScreen(
                 )
             }
         }
+    }
+
+    if (uiState.selectedUser != null) {
+        AlertDialog(
+            onDismissRequest = onDismissDialog,
+            confirmButton = { },
+            text = {
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    AsyncImage(
+                        model = uiState.selectedUser.avatarUrl,
+                        contentDescription = "Selected User Avatar",
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .aspectRatio(1f),
+                        contentScale = ContentScale.Crop
+                    )
+                    Spacer(modifier = Modifier.height(16.dp))
+                    Text(
+                        text = uiState.selectedUser.nickName,
+                        style = AppTextStyles.mediumTextMedium
+                    )
+                }
+            },
+            containerColor = AppColors.white
+        )
     }
 }
 

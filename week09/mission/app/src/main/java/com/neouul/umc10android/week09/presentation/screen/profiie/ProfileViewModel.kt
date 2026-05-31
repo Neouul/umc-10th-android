@@ -2,6 +2,7 @@ package com.neouul.umc10android.week09.presentation.screen.profiie
 
 import androidx.lifecycle.viewModelScope
 import com.neouul.umc10android.week09.core.base.BaseViewModel
+import com.neouul.umc10android.week09.domain.model.User
 import com.neouul.umc10android.week09.domain.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -48,5 +49,13 @@ class ProfileViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    fun onUserClicked(user: User) {
+        updateState { it.copy(selectedUser = user) }
+    }
+
+    fun onDismissDialog() {
+        updateState { it.copy(selectedUser = null) }
     }
 }
