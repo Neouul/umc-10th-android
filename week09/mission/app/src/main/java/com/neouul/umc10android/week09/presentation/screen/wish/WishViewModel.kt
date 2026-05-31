@@ -18,7 +18,7 @@ class WishViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             wishRepository.getWishedProductsFlow().collect { products ->
-                _uiState.value = _uiState.value.copy(products = products)
+                updateState { it.copy(products = products) }
             }
         }
     }

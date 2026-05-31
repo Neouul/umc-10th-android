@@ -20,18 +20,20 @@ class DetailViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            _uiState.value = _uiState.value.copy(isLoading = true)
+            updateState { it.copy(isLoading = true) }
             productRepository.getProduct(productId).collect { product ->
-                _uiState.value = _uiState.value.copy(
-                    product = product,
-                    isLoading = false
-                )
+                updateState {
+                    it.copy(
+                        product = product,
+                        isLoading = false
+                    )
+                }
             }
         }
     }
 
     fun toggleWish() {
-        val currentProduct = _uiState.value.product ?: return
+        val currentProduct = uiState.value.product ?: return
         viewModelScope.launch {
             productRepository.updateWishStatus(currentProduct.id, !currentProduct.isWished)
         }

@@ -11,4 +11,8 @@ abstract class BaseViewModel<STATE : UiState>(
     protected val _uiState = MutableStateFlow(initialPageState)
     val uiState: StateFlow<STATE>
         get() = _uiState.asStateFlow()
+
+    protected fun updateState(update: (STATE) -> STATE) {
+        _uiState.value = update(_uiState.value)
+    }
 }

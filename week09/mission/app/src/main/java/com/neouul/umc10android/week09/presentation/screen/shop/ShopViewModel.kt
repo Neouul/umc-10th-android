@@ -28,10 +28,12 @@ class ShopViewModel @Inject constructor(
                         2 -> products.filter { it.isBestSeller }
                         else -> products
                     }
-                    _uiState.value = _uiState.value.copy(
-                        products = filtered,
-                        selectedTabIndex = index
-                    )
+                    updateState {
+                        it.copy(
+                            products = filtered,
+                            selectedTabIndex = index
+                        )
+                    }
                 }
         }
     }

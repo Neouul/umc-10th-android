@@ -14,14 +14,14 @@ class HomeViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            _uiState.value = _uiState.value.copy(isLoading = true)
+            updateState { it.copy(isLoading = true) }
             productRepository.syncProducts()
-            _uiState.value = _uiState.value.copy(isLoading = false)
+            updateState { it.copy(isLoading = false) }
         }
 
         viewModelScope.launch {
             productRepository.getHomeProducts().collect { products ->
-                _uiState.value = _uiState.value.copy(products = products)
+                updateState { it.copy(products = products) }
             }
         }
     }
