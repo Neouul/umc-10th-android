@@ -10,9 +10,9 @@ class UserRepositoryImpl @Inject constructor(
     private val userDataSource: UserDataSource
 ) : UserRepository {
 
-    override suspend fun getUsers(page: Int, token: String): Result<List<User>> {
+    override suspend fun getUsers(page: Int): Result<List<User>> {
         return try {
-            val response = userDataSource.getUsers(page, token)
+            val response = userDataSource.getUsers(page)
             val url = response.raw().request.url
             Log.d("UserRepository", "Request URL (getUsers): $url")
             
@@ -30,10 +30,9 @@ class UserRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getUserById(id: Long, token: String): Result<User> {
+    override suspend fun getUserById(id: Long): Result<User> {
         return try {
-            Log.d("UserRepository", "getUserById calling with token: '$token' (length: ${token.length})")
-            val response = userDataSource.getUserById(id, token)
+            val response = userDataSource.getUserById(id)
             val url = response.raw().request.url
             Log.d("UserRepository", "Request URL (getUserById): $url")
             Log.d("UserRepository", "Request Headers: ${response.raw().request.headers}")
