@@ -12,12 +12,12 @@ import androidx.navigation.navigation
 import com.neouul.umc10android.week09.presentation.screen.cart.CartScreen
 import com.neouul.umc10android.week09.presentation.screen.home.HomeRoot
 import com.neouul.umc10android.week09.presentation.screen.main.MainScreen
-import com.neouul.umc10android.week09.presentation.screen.profiie.ProfileScreen
 import com.neouul.umc10android.week09.presentation.screen.shop.ShopRoot
 import com.neouul.umc10android.week09.presentation.screen.wish.WishRoot
 import androidx.navigation.toRoute
 import com.neouul.umc10android.week09.presentation.screen.splash.SplashRoot
 import com.neouul.umc10android.week09.presentation.screen.detail.DetailRoot
+import com.neouul.umc10android.week09.presentation.screen.profiie.ProfileRoot
 
 @Composable
 fun NavigationRoot(
@@ -106,7 +106,7 @@ fun NavigationRoot(
                                 )
                             }
                             composable<Route.Profile> {
-                                ProfileScreen()
+                                ProfileRoot()
                             }
                             composable<Route.ProductDetail> {
                                 DetailRoot(
