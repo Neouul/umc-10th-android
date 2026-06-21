@@ -65,12 +65,13 @@ fun DetailScreen(
 
                 // 이미지 영역
                 AsyncImage(
-                    model = product.img.ifEmpty { R.drawable.img_detail },
+                    model = product.img.ifEmpty { null },
                     contentDescription = product.name,
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(366.dp),
                     contentScale = ContentScale.Crop,
+                    placeholder = painterResource(id = R.drawable.img_detail),
                     error = painterResource(id = R.drawable.img_detail)
                 )
 

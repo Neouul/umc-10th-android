@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -50,10 +51,12 @@ fun ProductItem(
                 .background(AppColors.gray2)
         ) {
             AsyncImage(
-                model = product.img,
+                model = product.img.ifEmpty { null },
                 contentDescription = product.name,
-                modifier = Modifier,
-                contentScale = ContentScale.Crop
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop,
+                placeholder = painterResource(id = R.drawable.img_detail),
+                error = painterResource(id = R.drawable.img_detail)
             )
 
             if (!isWishItem) {
