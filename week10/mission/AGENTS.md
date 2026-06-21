@@ -20,19 +20,19 @@
 ## 프로젝트 구조
 - `app/src/main/java/com/neouul/umc10android/week10`
     - `core`: 앱 공통 핵심 라이브러리 및 설정
-        - [base](file:///E:/Documents/Coding/Android/UMC/umc-10th-android/week10/mission/app/src/main/java/com/neouul/umc10android/week10/core/base): MVI/MVVM 상태 관리를 위한 [BaseViewModel.kt](file:///E:/Documents/Coding/Android/UMC/umc-10th-android/week10/mission/app/src/main/java/com/neouul/umc10android/week10/core/base/BaseViewModel.kt), [UiState.kt](file:///E:/Documents/Coding/Android/UMC/umc-10th-android/week10/mission/app/src/main/java/com/neouul/umc10android/week10/core/base/UiState.kt) 정의
-        - [di](file:///E:/Documents/Coding/Android/UMC/umc-10th-android/week10/mission/app/src/main/java/com/neouul/umc10android/week10/core/di): Hilt 모듈들 정의 ([NetworkModule.kt](file:///E:/Documents/Coding/Android/UMC/umc-10th-android/week10/mission/app/src/main/java/com/neouul/umc10android/week10/core/di/NetworkModule.kt), [DatabaseModule.kt](file:///E:/Documents/Coding/Android/UMC/umc-10th-android/week10/mission/app/src/main/java/com/neouul/umc10android/week10/core/di/DatabaseModule.kt) 등)
-        - [routing](file:///E:/Documents/Coding/Android/UMC/umc-10th-android/week10/mission/app/src/main/java/com/neouul/umc10android/week10/core/routing): Type-safe 내비게이션 처리를 위한 [NavigationRoot.kt](file:///E:/Documents/Coding/Android/UMC/umc-10th-android/week10/mission/app/src/main/java/com/neouul/umc10android/week10/core/routing/NavigationRoot.kt) 및 [Route.kt](file:///E:/Documents/Coding/Android/UMC/umc-10th-android/week10/mission/app/src/main/java/com/neouul/umc10android/week10/core/routing/Route.kt)
+        - [base](app/src/main/java/com/neouul/umc10android/week10/core/base): MVI/MVVM 상태 관리를 위한 [BaseViewModel.kt](app/src/main/java/com/neouul/umc10android/week10/core/base/BaseViewModel.kt), [UiState.kt](app/src/main/java/com/neouul/umc10android/week10/core/base/UiState.kt) 정의
+        - [di](app/src/main/java/com/neouul/umc10android/week10/core/di): Hilt 모듈들 정의 ([NetworkModule.kt](app/src/main/java/com/neouul/umc10android/week10/core/di/NetworkModule.kt), [DatabaseModule.kt](app/src/main/java/com/neouul/umc10android/week10/core/di/DatabaseModule.kt) 등)
+        - [routing](app/src/main/java/com/neouul/umc10android/week10/core/routing): Type-safe 내비게이션 처리를 위한 [NavigationRoot.kt](app/src/main/java/com/neouul/umc10android/week10/core/routing/NavigationRoot.kt) 및 [Route.kt](app/src/main/java/com/neouul/umc10android/week10/core/routing/Route.kt)
     - `data`: 데이터 소스 및 리포지토리 구현부
         - `data_source`: 로컬 Room DB(dao, entity) 및 원격 Retrofit API(api, RemoteDataSource) 데이터 소스 구현
         - `dto`: 네트워크/원격 데이터 전달 모델 (ProductDto, UserDto 등)
         - `mapper`: 데이터 모델을 도메인 모델로 변환 (ProductMapper 등)
-        - `repository`: 도메인의 리포지토리 인터페이스 구현체 ([ProductRepositoryImpl.kt](file:///E:/Documents/Coding/Android/UMC/umc-10th-android/week10/mission/app/src/main/java/com/neouul/umc10android/week10/data/repository/ProductRepositoryImpl.kt) 등)
+        - `repository`: 도메인의 리포지토리 인터페이스 구현체 ([ProductRepositoryImpl.kt](app/src/main/java/com/neouul/umc10android/week10/data/repository/ProductRepositoryImpl.kt) 등)
     - `domain`: 비즈니스 로직 및 인터페이스
         - `model`: 핵심 비즈니스 엔티티 모델 (Product, User)
-        - `repository`: 비즈니스 규칙이 의존하는 인터페이스 ([ProductRepository.kt](file:///E:/Documents/Coding/Android/UMC/umc-10th-android/week10/mission/app/src/main/java/com/neouul/umc10android/week10/domain/repository/ProductRepository.kt) 등)
+        - `repository`: 비즈니스 규칙이 의존하는 인터페이스 ([ProductRepository.kt](app/src/main/java/com/neouul/umc10android/week10/domain/repository/ProductRepository.kt) 등)
     - `presentation`: UI 레이어
-        - `component`: 재사용 가능한 UI 컴포넌트 ([MainBottomNavigationBar.kt](file:///E:/Documents/Coding/Android/UMC/umc-10th-android/week10/mission/app/src/main/java/com/neouul/umc10android/week10/presentation/component/MainBottomNavigationBar.kt) 등)
+        - `component`: 재사용 가능한 UI 컴포넌트 ([MainBottomNavigationBar.kt](app/src/main/java/com/neouul/umc10android/week10/presentation/component/MainBottomNavigationBar.kt) 등)
         - `screen`: 각 화면 구현부 (cart, detail, home, main, profiie, shop, splash, wish). MVI 구조의 Root-Screen-State-ViewModel 구조 지향.
     - `ui`: 테마, 컬러, 폰트 정의
 
@@ -54,13 +54,13 @@
    - 네트워크 및 로컬 DB 객체는 외부 노출 없이 `DataSource`를 거쳐 `Repository`에서 병합 및 동기화(`syncProducts`) 과정을 거칩니다.
    - 네트워크 응답을 받는 DTO 객체나 DB 테이블에 매핑되는 Entity 객체는 반드시 매퍼(`mapper`)를 거쳐 Domain Model(`Product` 등)로 변환해 레이어 간 독립성을 유지합니다.
 4. **내비게이션**
-   - [Route.kt](file:///E:/Documents/Coding/Android/UMC/umc-10th-android/week10/mission/app/src/main/java/com/neouul/umc10android/week10/core/routing/Route.kt)의 `@Serializable` 객체들을 이용해 Type-safe 내비게이션을 지원합니다.
-   - 메인 내비게이션 그래프는 [NavigationRoot.kt](file:///E:/Documents/Coding/Android/UMC/umc-10th-android/week10/mission/app/src/main/java/com/neouul/umc10android/week10/core/routing/NavigationRoot.kt)에서 집중 관리하며, 하단 탭 영역은 중첩 그래프(`MainGraph` 등)로 구성하여 상태 관리를 효율화합니다.
+   - [Route.kt](app/src/main/java/com/neouul/umc10android/week10/core/routing/Route.kt)의 `@Serializable` 객체들을 이용해 Type-safe 내비게이션을 지원합니다.
+   - 메인 내비게이션 그래프는 [NavigationRoot.kt](app/src/main/java/com/neouul/umc10android/week10/core/routing/NavigationRoot.kt)에서 집중 관리하며, 하단 탭 영역은 중첩 그래프(`MainGraph` 등)로 구성하여 상태 관리를 효율화합니다.
 
 ## 주요 파일
-- [MainActivity.kt](file:///E:/Documents/Coding/Android/UMC/umc-10th-android/week10/mission/app/src/main/java/com/neouul/umc10android/week10/MainActivity.kt): 앱의 최초 실행 및 네비게이션 진입점
-- [MyApplication.kt](file:///E:/Documents/Coding/Android/UMC/umc-10th-android/week10/mission/app/src/main/java/com/neouul/umc10android/week10/MyApplication.kt): Hilt 앱 클래스 (`@HiltAndroidApp`)
-- [NavigationRoot.kt](file:///E:/Documents/Coding/Android/UMC/umc-10th-android/week10/mission/app/src/main/java/com/neouul/umc10android/week10/core/routing/NavigationRoot.kt): 메인 내비게이션 및 중첩 그래프 정의
-- [NetworkModule.kt](file:///E:/Documents/Coding/Android/UMC/umc-10th-android/week10/mission/app/src/main/java/com/neouul/umc10android/week10/core/di/NetworkModule.kt): API 통신을 위한 Retrofit / OkHttp 의존성 설정 모듈
-- [DatabaseModule.kt](file:///E:/Documents/Coding/Android/UMC/umc-10th-android/week10/mission/app/src/main/java/com/neouul/umc10android/week10/core/di/DatabaseModule.kt): Room 데이터베이스 생성 및 Dao 제공 모듈
-- [Theme.kt](file:///E:/Documents/Coding/Android/UMC/umc-10th-android/week10/mission/app/src/main/java/com/neouul/umc10android/week10/ui/theme/Theme.kt): 앱의 전역 테마 및 스타일 가이드
+- [MainActivity.kt](app/src/main/java/com/neouul/umc10android/week10/MainActivity.kt): 앱의 최초 실행 및 네비게이션 진입점
+- [MyApplication.kt](app/src/main/java/com/neouul/umc10android/week10/MyApplication.kt): Hilt 앱 클래스 (`@HiltAndroidApp`)
+- [NavigationRoot.kt](app/src/main/java/com/neouul/umc10android/week10/core/routing/NavigationRoot.kt): 메인 내비게이션 및 중첩 그래프 정의
+- [NetworkModule.kt](app/src/main/java/com/neouul/umc10android/week10/core/di/NetworkModule.kt): API 통신을 위한 Retrofit / OkHttp 의존성 설정 모듈
+- [DatabaseModule.kt](app/src/main/java/com/neouul/umc10android/week10/core/di/DatabaseModule.kt): Room 데이터베이스 생성 및 Dao 제공 모듈
+- [Theme.kt](app/src/main/java/com/neouul/umc10android/week10/ui/theme/Theme.kt): 앱의 전역 테마 및 스타일 가이드
