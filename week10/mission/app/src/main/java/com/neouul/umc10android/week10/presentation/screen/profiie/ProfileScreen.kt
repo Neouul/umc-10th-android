@@ -20,6 +20,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
+import com.neouul.umc10android.week10.presentation.component.zoomable
 import coil3.compose.AsyncImage
 import com.neouul.umc10android.week10.presentation.component.CommonButton
 import com.neouul.umc10android.week10.presentation.component.ProfileTabItem
@@ -215,12 +219,21 @@ fun ProfileScreen(
     }
 
     if (uiState.selectedUser != null) {
-        AlertDialog(
+        Dialog(
             onDismissRequest = onDismissDialog,
-            confirmButton = { },
-            text = {
+            properties = DialogProperties(usePlatformDefaultWidth = false)
+        ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.Black.copy(alpha = 0.8f))
+                    .clickable { onDismissDialog() },
+                contentAlignment = Alignment.Center
+            ) {
                 Column(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable(enabled = false) {},
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     AsyncImage(
@@ -228,18 +241,18 @@ fun ProfileScreen(
                         contentDescription = "Selected User Avatar",
                         modifier = Modifier
                             .fillMaxWidth()
-                            .aspectRatio(1f),
-                        contentScale = ContentScale.Crop
+                            .aspectRatio(1f)
+                            .zoomable(),
+                        contentScale = ContentScale.Fit
                     )
-                    Spacer(modifier = Modifier.height(16.dp))
+                    Spacer(modifier = Modifier.height(24.dp))
                     Text(
                         text = uiState.selectedUser.nickName,
-                        style = AppTextStyles.mediumTextMedium
+                        style = AppTextStyles.mediumTextMedium.copy(color = AppColors.white)
                     )
                 }
-            },
-            containerColor = AppColors.white
-        )
+            }
+        }
     }
 }
 
